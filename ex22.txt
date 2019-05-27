@@ -1,0 +1,10 @@
++   plus
+-   minus
+/   slash                     (divide)
+\   back-slash
+*   asterisk                  (multiply)
+%   percent                   (remainder-divide)
+//  double-slash              (integer-divide)
+_   underscore
+'   single-quote
+"   double-quote
