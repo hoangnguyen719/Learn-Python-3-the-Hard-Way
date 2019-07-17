@@ -34,7 +34,7 @@ class CentralCorridor(Scene):
         The aliens have surrounded the whole spaceship.
         You have to run away, but there is an alien in front of you.
         What are you going to do?
-        """)
+        """))
         print("1. Shoot")
         print("2. Run")
         print("3. Tell a joke")
