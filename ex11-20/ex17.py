@@ -4,7 +4,7 @@ from os.path import exists
 script, from_file, to_file = argv
 
 # one-line code
-open(to_file, 'w').write(open(from_file).read())
+open(to_file, 'w').write(open(from_file).read() + f'\nThis file has been overwritten from {from_file}')
 
 # print(f"Copying from {from_file} to {to_file}")
 #

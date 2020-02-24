@@ -1,1 +1,5 @@
-"this the second sample line\r\naaaaaa" 
+line 1
+line two
+last line
+
+This file has been overwritten from ex15_sample.txt
