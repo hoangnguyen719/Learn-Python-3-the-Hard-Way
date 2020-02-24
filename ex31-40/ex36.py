@@ -17,10 +17,11 @@ def bathroom():
         action = input("> ")
         if action == "2":
             print("May I say... shit is done?!...")
+            game_over('\n')
         elif action == "1":
-            print("Your face is full of pimples!")
+            game_over("Your face is full of pimples!")
         else:
-            print("Learn to type a number!")
+            game_over("Learn to type a number!")
 
 def table():
     print("This is the table.")
@@ -35,7 +36,7 @@ def table():
 
     if action == "1":
         print("You fucking nerd?!")
-    elif action == "2":
+    else:
         print("You fucking lazy bastard!")
         game_over("You later become unemployed and nobody loves you.")
 
@@ -55,7 +56,7 @@ def bed():
         print("Yes, better go back to study.")
 
 def game_over(x):
-    print(x)
+    print(x, 'See-ya!')
 
 def main():
     print("This is Hoang's room.")
