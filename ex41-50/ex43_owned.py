@@ -1,13 +1,15 @@
 from textwrap import dedent
 
+first_scene_name = 'central_jungle'
 death_scene_name = 'death'
+win_scene_name = 'win'
 
 class jungle(object):
-    def __init__(self):
-        print('Successfully init jungle!')
-        pass
+    def __init__(self, scenes):
+        self.scenes = scenes
+        # pass
     def next_area(self, area_name):
-        pass
+        return self.scenes[area_name]
 
 
 class area(object):
@@ -17,6 +19,7 @@ class area(object):
         self.test_answer = test_answer
         self.next_area_name = next_area_name
     def enter(self):
+        print('===================')
         print(self.description)
     def test(self):
         self.answer = input('> ')
@@ -26,9 +29,8 @@ class area(object):
 
 class central_jungle(area):
     def __init__(self):
-        this_area_name = 'central_jungle'
+        this_area_name = first_scene_name
         description = dedent('''
-        ===================
         You are now at the central of the jungle!
         You are facing a panther.
         She's studying math, but you've bothered her.
@@ -44,9 +46,8 @@ class volcano(area):
     def __init__(self):
         this_area_name = 'volcano'
         description = dedent('''
-        ===================
         You've passed the central of the jungle and arrived at the greatest volcano of the forest.
-        There lies Passy Opzekt-reeferinz, a fire dragon with thousand-fahrenheit breadth 
+        There lies Passbei Opzekt-reeferinz, a fire dragon with thousand-fahrenheit breadth 
         \tand also a Python guru.
         It asks you what is the output of these two scripts.
 
@@ -71,6 +72,7 @@ class volcano(area):
         super().__init__(this_area_name, description, test_answer, next_area_name)
     def test(self):
         answer = {}
+        print('(put string in quotation mark)')
         for s in ('Script 1', 'Script 2'):
             answer[s] = eval(input('> {}: '.format(s)))
         self.answer = answer
@@ -100,7 +102,7 @@ class fall(area):
 class cliff(area):
     def __init__(self):
         this_area_name='cliff'
-        description='''
+        description=dedent('''
         You've successfully figured out the correct determinant.
         The god guardian allowed you to enter the path behind the fall
         \tand showed you a secret tunnel which leads to the very end of the jungle.
@@ -108,55 +110,77 @@ class cliff(area):
         It asks you one simple question which, if you can answer, will open your path to the Python Heaven.
         But, if you fail this last but not least challenge, the ape will throw you off the cliff.
         \t"What does DRY mean?"
-        '''
+        ''')
         test_answer = "do not repeat yourself"
         next_area_name = 'win'
         super().__init__(this_area_name, description, test_answer, next_area_name)
     def test(self):
         answer = input('> ').lower()
-        self.answer = "do not repeat yourself" if answer in ("don't repeat yourself", "do not repeat yourself") else answer
+        self.answer = "do not repeat yourself" if answer in ("don't repeat yourself"\
+            , "do not repeat yourself"\
+            , "dont repeat yourself") else answer
         
 
 class death(area):
     def __init__(self):
         this_area_name = death_scene_name
-        description = '''
+        description = dedent('''
         You are dead! GGWP!
         Good luck next time noob!
-        '''
+        ''')
         super().__init__(this_area_name, description, None, None)
     def test(self):
         pass
     def result(self):
-        pass
+        print('#'*50)
+        again = input('> Do you want to play again (enter Y if yes)?\n')
+        return first_scene_name if again.lower() == 'y' else 'exit'
 
 class win(area):
     def __init__(self):
         this_area_name = 'win'
-        description='''
+        description=dedent('''
         You've successfully completed all challenges on your quest to the Python Heaven!
         But careful you should be, this is just the start.
         The bigger, more important and even more challenging path lies ahead.
-        Eat a lot, sleep a tons, be hardworking and patient.
-        All the best to your future endeavors.
-        '''
+        Eat a lot, sleep a tons, and be hardworking and patient.
+        Eventually you will be blessed by Pythonion, the Programming God.
+        ''')
         super().__init__(this_area_name, description, None, None)
     def test(self):
         pass
     def result(self):
-        pass
+        print('#'*50)
+        again = input('> Do you want to play again (enter Y if yes)?\n')
+        return first_scene_name if again.lower() == 'y' else 'exit'
+
 
 class rope(object):
-    def __init__(self, map):
-        self.map = map
+    def __init__(self, jungle, first_scene, death_scene, win_scene):
+        self.jungle = jungle
+        self.first_scene_name = first_scene
+        self.death_scene_name = death_scene
+        self.win_scene_name = win_scene
     def play(self):
-        self.map.next_area()
+        print(dedent('''
+        Welcome to the Journey to Python Heaven!
+        You're about to face a series of challenges on your path to be with Pythonion - the Programming God.
+        Best of luck on your journey!
+        '''))
+        scene = self.first_scene_name
+        while scene != 'exit':
+            current_scene = self.jungle.next_area(scene)
+            current_scene.enter()
+            current_scene.test()
+            scene = current_scene.result()
+        print('The game has been exit.')
 
-jungle_map = jungle()
-test = death()
-# print(central_jungle.next_area_name)
-# print(central_jungle.description)
-# print(central_jungle.test_answer)
-test.enter()
-test.test()
-print(test.result())
+
+
+everything = {}
+for s in (central_jungle, cliff, fall, volcano, win, death):
+    scene = s()
+    everything[scene.this_area_name] = scene
+jungle = jungle(everything)
+rope = rope(jungle, first_scene_name, death_scene_name, win_scene_name)
+rope.play()
