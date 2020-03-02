@@ -38,7 +38,6 @@ class central_jungle(area):
         ''')
         test_answer = str(3.141593)
         next_area_name = 'volcano'
-
         super().__init__(this_area_name, description, test_answer, next_area_name)
 
 class volcano(area):
@@ -47,7 +46,8 @@ class volcano(area):
         description = dedent('''
         ===================
         You've passed the central of the jungle and arrived at the greatest volcano of the forest.
-        There is a fire dragon with thousand-fahrenheit breadth and also a Python guru.
+        There lies Passy Opzekt-reeferinz, a fire dragon with thousand-fahrenheit breadth 
+        \tand also a Python guru.
         It asks you what is the output of these two scripts.
 
         Script 1:
@@ -64,34 +64,86 @@ class volcano(area):
         \tfunction(x)
         \tprint(x)
 
-        If you get them wrong then you are not worth and only dead meat.
+        If you get them wrong then you are not worthy and only dead meat.
         ''')
         test_answer = {'Script 1': [0], 'Script 2': [0,1]}
-        next_area_name = 'mountain'
+        next_area_name = 'fall'
         super().__init__(this_area_name, description, test_answer, next_area_name)
     def test(self):
         answer = {}
         for s in ('Script 1', 'Script 2'):
             answer[s] = eval(input('> {}: '.format(s)))
+        self.answer = answer
         print(self.answer)
         
 
-class mountain(area):
+class fall(area):
     def __init__(self):
-        pass
-    def enter(self):
-        pass
+        this_area_name = 'fall'
+        description = dedent('''
+        You've successfully overcome the dragon's Python test.
+        The dragon carried you over the exploding volcano by its giant, bloody-red wings
+        \tand has dropped you by the great Linir Algeeba fall.
+        As you're wandering aroudn not knowing where to go next, the fall suddenly splits in two
+        \tand from behind comes Deetir Minoan, the god guardian of the fall.
+        He asks you what is the following value:
+             | 2 -3  1|
+        det( | 4  2 -1| )
+             |-5  3 -2|
+        It's one of the most basic things in linear algebra, so if you don't know it
+        \tthen there's no point to go any further.
+        ''')
+        test_answer = str(-19)
+        next_area_name = 'cliff'
+        super().__init__(this_area_name, description, test_answer, next_area_name)
 
 class cliff(area):
     def __init__(self):
-        pass
-    def enter(self):
-        pass
+        this_area_name='cliff'
+        description='''
+        You've successfully figured out the correct determinant.
+        The god guardian allowed you to enter the path behind the fall
+        \tand showed you a secret tunnel which leads to the very end of the jungle.
+        There, you stand of the cliff facing the final challenge: a giant ape named Piton Zen.
+        It asks you one simple question which, if you can answer, will open your path to the Python Heaven.
+        But, if you fail this last but not least challenge, the ape will throw you off the cliff.
+        \t"What does DRY mean?"
+        '''
+        test_answer = "do not repeat yourself"
+        next_area_name = 'win'
+        super().__init__(this_area_name, description, test_answer, next_area_name)
+    def test(self):
+        answer = input('> ').lower()
+        self.answer = "do not repeat yourself" if answer in ("don't repeat yourself", "do not repeat yourself") else answer
+        
 
 class death(area):
     def __init__(self):
+        this_area_name = death_scene_name
+        description = '''
+        You are dead! GGWP!
+        Good luck next time noob!
+        '''
+        super().__init__(this_area_name, description, None, None)
+    def test(self):
         pass
-    def enter(self):
+    def result(self):
+        pass
+
+class win(area):
+    def __init__(self):
+        this_area_name = 'win'
+        description='''
+        You've successfully completed all challenges on your quest to the Python Heaven!
+        But careful you should be, this is just the start.
+        The bigger, more important and even more challenging path lies ahead.
+        Eat a lot, sleep a tons, be hardworking and patient.
+        All the best to your future endeavors.
+        '''
+        super().__init__(this_area_name, description, None, None)
+    def test(self):
+        pass
+    def result(self):
         pass
 
 class rope(object):
@@ -101,16 +153,10 @@ class rope(object):
         self.map.next_area()
 
 jungle_map = jungle()
-
-central_jungle = central_jungle()
+test = death()
 # print(central_jungle.next_area_name)
 # print(central_jungle.description)
 # print(central_jungle.test_answer)
-central_jungle.enter()
-central_jungle.test()
-central_jungle.result()
-
-volcano = volcano()
-volcano.enter()
-volcano.test()
-print(volcano.result())
+test.enter()
+test.test()
+print(test.result())
