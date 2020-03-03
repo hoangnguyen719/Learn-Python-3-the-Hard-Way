@@ -1,16 +1,5 @@
 from textwrap import dedent
-
-first_scene_name = 'central_jungle'
-death_scene_name = 'death'
-win_scene_name = 'win'
-
-class jungle(object):
-    def __init__(self, scenes):
-        self.scenes = scenes
-        # pass
-    def next_area(self, area_name):
-        return self.scenes[area_name]
-
+from sys import exit
 
 class area(object):
     def __init__(self, this_area_name, description, test_answer, next_area_name):
@@ -24,14 +13,13 @@ class area(object):
     def test(self):
         self.answer = input('> ')
     def result(self):
-        return self.next_area_name if self.answer==self.test_answer else death_scene_name
+        return self.next_area_name if self.answer==self.test_answer else 'death'
 
 
 class central_jungle(area):
     def __init__(self):
-        this_area_name = first_scene_name
-        description = dedent('''
-        You are now at the central of the jungle!
+        this_area_name = 'central_jungle'
+        description = dedent('''You are now at the central of the jungle!
         You are facing a panther.
         She's studying math, but you've bothered her.
         Now you have to help her with her homework, otherwise she will eat you alive!
@@ -45,8 +33,7 @@ class central_jungle(area):
 class volcano(area):
     def __init__(self):
         this_area_name = 'volcano'
-        description = dedent('''
-        You've passed the central of the jungle and arrived at the greatest volcano of the forest.
+        description = dedent('''You've passed the central of the jungle and arrived at the greatest volcano of the forest.
         There lies Passbei Opzekt-reeferinz, a fire dragon with thousand-fahrenheit breadth 
         \tand also a Python guru.
         It asks you what is the output of these two scripts.
@@ -76,14 +63,12 @@ class volcano(area):
         for s in ('Script 1', 'Script 2'):
             answer[s] = eval(input('> {}: '.format(s)))
         self.answer = answer
-        print(self.answer)
         
 
 class fall(area):
     def __init__(self):
         this_area_name = 'fall'
-        description = dedent('''
-        You've successfully overcome the dragon's Python test.
+        description = dedent('''You've successfully overcome the dragon's Python test.
         The dragon carried you over the exploding volcano by its giant, bloody-red wings
         \tand has dropped you by the great Linir Algeeba fall.
         As you're wandering aroudn not knowing where to go next, the fall suddenly splits in two
@@ -102,8 +87,7 @@ class fall(area):
 class cliff(area):
     def __init__(self):
         this_area_name='cliff'
-        description=dedent('''
-        You've successfully figured out the correct determinant.
+        description=dedent('''You've successfully figured out the correct determinant.
         The god guardian allowed you to enter the path behind the fall
         \tand showed you a secret tunnel which leads to the very end of the jungle.
         There, you stand of the cliff facing the final challenge: a giant ape named Piton Zen.
@@ -123,24 +107,20 @@ class cliff(area):
 
 class death(area):
     def __init__(self):
-        this_area_name = death_scene_name
-        description = dedent('''
-        You are dead! GGWP!
+        this_area_name = 'death'
+        description = dedent('''You are dead! GGWP!
         Good luck next time noob!
         ''')
         super().__init__(this_area_name, description, None, None)
     def test(self):
         pass
     def result(self):
-        print('#'*50)
-        again = input('> Do you want to play again (enter Y if yes)?\n')
-        return first_scene_name if again.lower() == 'y' else 'exit'
+        return 'exit'
 
 class win(area):
     def __init__(self):
         this_area_name = 'win'
-        description=dedent('''
-        You've successfully completed all challenges on your quest to the Python Heaven!
+        description=dedent('''You've successfully completed all challenges on your quest to the Python Heaven!
         But careful you should be, this is just the start.
         The bigger, more important and even more challenging path lies ahead.
         Eat a lot, sleep a tons, and be hardworking and patient.
@@ -150,13 +130,11 @@ class win(area):
     def test(self):
         pass
     def result(self):
-        print('#'*50)
-        again = input('> Do you want to play again (enter Y if yes)?\n')
-        return first_scene_name if again.lower() == 'y' else 'exit'
+        return 'exit'
 
 
 class rope(object):
-    def __init__(self, jungle, first_scene, death_scene, win_scene):
+    def __init__(self, jungle, first_scene='central_jungle', death_scene='death', win_scene='win'):
         self.jungle = jungle
         self.first_scene_name = first_scene
         self.death_scene_name = death_scene
@@ -168,19 +146,38 @@ class rope(object):
         Best of luck on your journey!
         '''))
         scene = self.first_scene_name
+        previous_scene = self.first_scene_name
         while scene != 'exit':
             current_scene = self.jungle.next_area(scene)
             current_scene.enter()
             current_scene.test()
+            if scene in (self.death_scene_name, self.win_scene_name):
+                print('#'*50)
+                again = input('Enter R to restart game.\nEnter A to play this round again.\nEnter to exit.\n> ').lower()
+                if again == 'r':
+                    scene = self.first_scene_name
+                    continue
+                elif again == 'a':
+                    scene = previous_scene
+                    continue
+            previous_scene = scene
             scene = current_scene.result()
         print('The game has been exit.')
+        exit(1)
 
+class jungle(object):
+    scenes = {'central_jungle': central_jungle()
+            , 'cliff': cliff()
+            , 'fall': fall()
+            , 'volcano': volcano()
+            , 'win': win()
+            , 'death': death()
+    }
+    def __init__(self):
+        pass
+    def next_area(self, area_name):
+        return self.scenes[area_name]
 
-
-everything = {}
-for s in (central_jungle, cliff, fall, volcano, win, death):
-    scene = s()
-    everything[scene.this_area_name] = scene
-jungle = jungle(everything)
-rope = rope(jungle, first_scene_name, death_scene_name, win_scene_name)
+jungle = jungle()
+rope = rope(jungle)
 rope.play()
