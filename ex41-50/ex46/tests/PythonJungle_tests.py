@@ -1,5 +1,6 @@
 from nose.tools import *
-import PythonJungle
+import Jungle
+import Rope
 
 def setup():
     print('SETUP!')

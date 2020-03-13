@@ -1,3 +1,3 @@
-from .JungleSetup import Rope as Rope
-from .JungleSetup import Jungle as Jungle
-# print('Initialized __init__.py!')
+print('Initialized __init__.py!')
+from .Jungle import Jungle
+from .Rope import Rope
