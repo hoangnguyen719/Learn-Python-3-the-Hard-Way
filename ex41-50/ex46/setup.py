@@ -12,7 +12,9 @@ config = {
     'url': 'URL to get it at',
     'download_url': 'Where to download it.',
     'author_email': 'hoang.m.nguyen719@gmail.com',
-    'install_requires': ['nose'],
+    'install_requires': [
+        'nose'
+        ],
     'scripts': []
 }
 
