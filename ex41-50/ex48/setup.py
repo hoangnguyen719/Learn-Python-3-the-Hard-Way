@@ -4,10 +4,10 @@ except ImportError:
     from distutils.core import setup
 
 config = {
-    'name': 'ex47',
-    'description': 'This is exercise 47 from Learn Python 3 The Hard Way - Shaw',
+    'name': 'NAME',
+    'description': 'Description',
     'version': '0.1',
-    'packages': ['ex47'],
+    'packages': ['NAME'],
     'author': 'Hoang Nguyen',
     'author_email': 'hoang.m.nguyen719@gmail.com',
     'install_requires': [
