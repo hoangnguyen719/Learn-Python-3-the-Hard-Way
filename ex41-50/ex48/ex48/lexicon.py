@@ -1,3 +1,10 @@
+def is_number(number):
+    try:
+        float(number)
+        return True
+    except ValueError:
+        return False
+
 def scan(string):
     accepted_words = {'direction': ['north', 'east', 'south', 'west'],
                       'verb': ['go', 'eat', 'kill'],
@@ -7,8 +14,8 @@ def scan(string):
     result = []
     # This 1st method respects the input string's order
     for string in strings:
-        if string.isdigit():
-            result.append(('number', int(string)))
+        if is_number(string):
+            result.append(('number', float(string)))
         else:
             for key in accepted_words:
                 if string.lower() in accepted_words[key]:

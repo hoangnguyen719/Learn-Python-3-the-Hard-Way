@@ -1,3 +1,4 @@
+# DO BETTER RELATIVE IMPORT HERE BY USING PATH
 from ex48 import lexicon
 
 def test_directions():
