@@ -6,10 +6,11 @@ def is_number(number):
         return False
 
 def scan(string):
-    accepted_words = {'direction': ['north', 'east', 'south', 'west'],
-                      'verb': ['go', 'eat', 'kill'],
-                      'stop': ['the', 'in', 'of'],
-                      'noun': ['bear', 'princess']}
+    accepted_words = {'direction': ['north', 'east', 'south', 'west',
+                                    'down', 'up', 'left', 'right', 'back'],
+                      'verb': ['go', 'eat', 'kill', 'stop', 'hit'],
+                      'stop': ['the', 'in', 'of', 'and', 'from', 'at', 'it'],
+                      'noun': ['bear', 'princess', 'door', 'cabinet']}
     strings = string.split()
     result = []
     # This 1st method respects the input string's order
