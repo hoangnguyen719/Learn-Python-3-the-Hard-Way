@@ -9,14 +9,18 @@ def scan(string):
     accepted_words = {'direction': ['north', 'east', 'south', 'west',
                                     'down', 'up', 'left', 'right', 'back'],
                       'verb': ['go', 'eat', 'kill', 'stop', 'hit'],
-                      'stop': ['the', 'in', 'of', 'and', 'from', 'at', 'it'],
-                      'noun': ['bear', 'princess', 'door', 'cabinet']}
+                      'stop': ['the', 'in', 'of', 'and', 'from', 'at', 'it', 'fucking', 'to'],
+                      'noun': ['bear', 'princess', 'door', 'cabinet', 'player']}
     strings = string.split()
     result = []
     # This 1st method respects the input string's order
     for string in strings:
         if is_number(string):
-            result.append(('number', float(string)))
+            try:
+                num = int(string) 
+            except:
+                num = float(string)
+            result.append(('number', num))
         else:
             for key in accepted_words:
                 if string.lower() in accepted_words[key]:

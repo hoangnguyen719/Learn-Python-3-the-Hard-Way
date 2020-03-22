@@ -40,3 +40,6 @@ def test_errors():
     assert result == [('noun', 'bear'),
                       ('error', 'IAS'),
                       ('noun', 'princess')]
+
+def test_empty():
+    assert lexicon.scan("") == []
