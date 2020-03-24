@@ -1,10 +1,15 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    greeting = "Hello World"
+    name = request.args.get('name', 'Nobody')
+    
+    if name:
+        greeting = f"Hello {name}"
+    else:
+        greeting = "Hello World"
     return render_template("index.html", greeting=greeting)
 
 @app.route('/1')
