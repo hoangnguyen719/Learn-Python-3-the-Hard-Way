@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Gothons From Planet Percal #25</title>
+    </head>
+    <body>
+        {% block content %}
+
+        {% endblock %}
+        <br>
+        <button onclick="goBack()">Go Back</button> <button onclick="goForward()">Go Forward</button>
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+            function goForward() {
+                window.history.forward();
+            }
+        </script>
+    </body>
+</html>
