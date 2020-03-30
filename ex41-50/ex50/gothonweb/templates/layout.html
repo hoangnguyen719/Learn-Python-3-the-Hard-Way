@@ -1,13 +1,26 @@
 <html>
     <head>
+        <base href="http://127.0.0.1:5000/"></base>
         <title>Gothons From Planet Percal #25</title>
     </head>
     <body>
+        <h1 style="color:grey; font-size:40px;align-items: center;">Testing Website</h1>
+        <p><strong>Author:</strong> Hoang Nguyen</p>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
         {% block content %}
 
         {% endblock %}
-        <br>
+        <br> 
         <button onclick="goBack()">Go Back</button> <button onclick="goForward()">Go Forward</button>
+        <p style="position: absolute; bottom: 0; text-align: left; " id="date"><i>Date: </i>"date"</p>
         <script>
             function goBack() {
                 window.history.back();
@@ -15,6 +28,11 @@
             function goForward() {
                 window.history.forward();
             }
+            n = new Date();
+            y = n.getFullYear();
+            m = n.getMonth()+1;
+            d = n.getDate();
+            document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
         </script>
     </body>
 </html>

@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    {% if username %}
+        <p>{{ username }}</p>
+    {% else %}
+        <p>No username is passed.</p>
+    {% endif %}
+{% endblock %}
