@@ -1,9 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<form action="/">
-    <input type="submit" value="Homepage">
-</form>
+
 {% if error %}
     <p class=error><strong>ERROR(S): </strong>{{ error }}</p>
 {% endif %}

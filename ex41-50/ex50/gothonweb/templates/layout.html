@@ -6,6 +6,10 @@
     <body>
         <h1 style="color:grey; font-size:40px;align-items: center;">Testing Website</h1>
         <p><strong>Author:</strong> Hoang Nguyen</p>
+        <p> <b>Date:</b> <span id="date"></span></p>
+        <form action="/">
+            <input type="submit" value="Homepage">
+        </form>
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <ul class=flashes>
@@ -19,8 +23,8 @@
 
         {% endblock %}
         <br> 
-        <button onclick="goBack()">Go Back</button> <button onclick="goForward()">Go Forward</button>
-        <p style="position: absolute; bottom: 0; text-align: left; " id="date"><i>Date: </i>"date"</p>
+        <button style="position: absolute; bottom: 10;" onclick="goBack()">Go Back</button> 
+        <button style="position: absolute; bottom: 10; left: 85" onclick="goForward()">Go Forward</button>
         <script>
             function goBack() {
                 window.history.back();
