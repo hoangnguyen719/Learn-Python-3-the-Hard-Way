@@ -2,10 +2,11 @@ import os
 from flask import Flask, flash, render_template, request, redirect, url_for, escape, send_from_directory
 from werkzeug.utils import secure_filename
 
-app = Flask(__name__)
-UPLOAD_FOLDER = os.path.join(app.instance_path, "upload")
+
+UPLOAD_FOLDER = os.path.join('static', 'image')
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
+app = Flask(__name__)
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -72,7 +73,7 @@ def uploaded():
     username = request.args.get('username')
     # return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
     return render_template("uploaded.html", filename=filename, filepath=filepath,\
-        upload_folder=upload_folder, username=username)
+        upload_folder = upload_folder, username=username)
 
 @app.route("/user/<username>")
 def show_user_profile(username):

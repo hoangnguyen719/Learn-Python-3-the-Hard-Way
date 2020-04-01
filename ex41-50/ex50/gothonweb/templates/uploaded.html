@@ -1,11 +1,11 @@
 {% extends "upload.html" %}
 
 {% block upload %}
-    {% if filename %}
+    {% if filepath %}
         <p>You have uploaded this photo.</p>
-        <img src="../instance/upload/{{ filename }}" alt="{{ filename }}">
+        <img src="{{ filepath }}" style="width: 500px" alt="{{ filename }}">
     {% else %}
         <p> No photo was uploaded so here's a random one.</p>
-        <img src="{{ upload_folder }}\random.png" alt="random.jpg">
+        <img src="{{ upload_folder }}\random.png" style="width: 500px" ="random.png">
     {% endif %}
 {% endblock upload %}
