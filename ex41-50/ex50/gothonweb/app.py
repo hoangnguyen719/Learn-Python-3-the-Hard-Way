@@ -33,17 +33,9 @@ def login():
         else:
             message = "Successfully logged in!"
             seconds = 1.5
-            redirect_url = "/upload/" + username
-            return redirect(url_for('redirecting', message=message, seconds=seconds, redirect_url=redirect_url))
-            # return render_template("index.html", greeting = "Hello " + username)
+            redirect_url = request.url_root + "upload/" + username
+            return render_template("redirect.html", message=message, seconds=seconds, redirect_url=redirect_url)
     return render_template("login.html", error=error)
-
-@app.route("/redirecting", methods=['GET', 'POST'])
-def redirecting():
-    message = request.args.get('message')
-    seconds = request.args.get('seconds')
-    redirect_url = request.args.get('redirect_url')
-    return render_template("redirect.html", message=message, seconds=seconds, redirect_url=redirect_url)
 
 @app.route("/upload/<string:username>", methods=['POST', 'GET'])
 def upload(username):
@@ -60,20 +52,13 @@ def upload(username):
             upload_folder = app.config['UPLOAD_FOLDER']
             filepath = os.path.join(upload_folder, filename)
             file.save(filepath)
-            return redirect(url_for('uploaded', filename=filename, filepath=filepath,\
-                upload_folder = upload_folder, username=username))
+            return render_template("uploaded.html", file={'path':filepath, 'name':filename},\
+                upload_folder = upload_folder, username=username)
+        else:
+            flash("Incorrect file/file type!")
+            return redirect(request.url)
     else:
         return render_template("upload.html", username=username)
-
-@app.route("/uploaded")
-def uploaded():
-    filename = request.args.get('filename')
-    filepath = request.args.get('filepath')
-    upload_folder = request.args.get('upload_folder')
-    username = request.args.get('username')
-    # return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-    return render_template("uploaded.html", filename=filename, filepath=filepath,\
-        upload_folder = upload_folder, username=username)
 
 @app.route("/user/<username>")
 def show_user_profile(username):
