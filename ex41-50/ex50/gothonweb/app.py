@@ -63,6 +63,10 @@ def upload(username):
 @app.route("/user/<username>")
 def show_user_profile(username):
     return 'User %s' % escape(username)
+
+@app.route("/t")
+def t():
+    return request.url_root
     
 # if __name__ == "__main__":
 #     app.run(debug=True)
